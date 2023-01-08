@@ -1,9 +1,11 @@
 const menuEmail = document.querySelector('.navbar-email');
 const desktopMenu = document.querySelector('.desktop-menu');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 const menuHamIcon = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
 const aside = document.querySelector('.product-detail');
+const productDetailContainer = document.querySelector('.product-detail-info');
 const cardsContainer = document.querySelector('.cards-container');
 
 const toggleDesktopMenu = () => {
@@ -18,7 +20,8 @@ const toggleDesktopMenu = () => {
 
 const toggleMobileMenu = () => {
   const isAsideClosed = aside.classList.contains('inactive');
-  
+  closeProductDetailAside();
+
   if(!isAsideClosed) {
     aside.classList.add('inactive');
   }
@@ -29,6 +32,11 @@ const toggleMobileMenu = () => {
 const toggleCarritoAside = () => {
   const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
   const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+  const isProductDetailClosed = productDetailContainer.classList.contains('inactive');
+  
+  if(!isProductDetailClosed) {
+    productDetailContainer.classList.add('inactive');
+  }
   
   if(!isDesktopMenuClosed) {
     desktopMenu.classList.add('inactive');
@@ -41,9 +49,25 @@ const toggleCarritoAside = () => {
   aside.classList.toggle('inactive');
 }
 
+const openProductDetailAside = () => {
+  const isAsideClosed = aside.classList.contains('inactive');
+  
+  if(!isAsideClosed) {
+    aside.classList.add('inactive');
+  }
+
+  productDetailContainer.classList.remove('inactive');
+}
+
+const closeProductDetailAside = () => {
+  productDetailContainer.classList.add('inactive');
+
+}
+
 menuEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click', toggleCarritoAside);
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
 
 const productList = [];
 productList.push({
@@ -69,6 +93,7 @@ const renderProducts = (array) => {
   
     const productImg = document.createElement('img');
     productImg.src = product.image;
+    productImg.addEventListener('click', openProductDetailAside);
   
     const productInfo = document.createElement('div');
     productInfo.classList.add('product-info');
